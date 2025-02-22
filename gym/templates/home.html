@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitFrame - Your AI Fitness Companion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">FitFrame</div>
+            <div class="nav-links">
+                {% if is_authenticated %}
+                    <div class="user-profile">
+                        {% if profile_pic %}
+                            <img src="{{ profile_pic }}" alt="Profile" class="profile-pic">
+                        {% else %}
+                            <div class="profile-pic-placeholder">{{ session.username[0].upper() }}</div>
+                        {% endif %}
+                        <span class="username">{{ session.username }}</span>
+                    </div>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                    <a href="#" class="nav-link">FAQs</a>
+                    <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                    <a href="{{ url_for('signup') }}" class="nav-link">Sign Up</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section" id="yoga">
+            <div class="section-content">
+                <h1>Master Your Yoga Practice</h1>
+                <p>Experience real-time AI-powered pose detection and correction to perfect your yoga journey. Track your progress and earn rewards for consistent practice.</p>
+                {% if not is_authenticated %}
+                    <a href="{{ url_for('signup') }}" class="cta-button">Start Your Journey</a>
+                {% else %}
+                    <a href="{{ url_for('exercise') }}" class="cta-button">Start Practice</a>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="info-section" id="gym">
+            <div class="section-content">
+                <h2>Transform Your Fitness</h2>
+                <p>Whether you're a beginner or an experienced athlete, our AI-powered system helps you maintain proper form and track your progress. Build strength, improve flexibility, and achieve your fitness goals safely and effectively.</p>
+                <div class="features">
+                    <div class="feature">
+                        <h3>Real-time Feedback</h3>
+                        <p>Get instant feedback on your form and technique</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your improvements over time</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Reward System</h3>
+                        <p>Earn points and unlock exclusive rewards</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="motivation-section" id="health">
+            <div class="section-content">
+                <h2>Your Path to Wellness</h2>
+                <p>Combine proper exercise with a balanced diet for optimal results. Our holistic approach helps you:</p>
+                <ul class="benefits-list">
+                    <li>Build lasting healthy habits</li>
+                    <li>Improve physical and mental well-being</li>
+                    <li>Track your fitness journey</li>
+                    <li>Stay motivated with our reward system</li>
+                </ul>
+                {% if not is_authenticated %}
+                    <a href="{{ url_for('signup') }}" class="cta-button">Join Now</a>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>FitFrame</h3>
+                <p>Your AI-powered fitness companion for a healthier lifestyle.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#yoga">Yoga</a></li>
+                    <li><a href="#gym">Fitness</a></li>
+                    <li><a href="#health">Wellness</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: support@fitframe.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FitFrame. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    // Smooth scrolling for section links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+    </script>
+</body>
+</html>

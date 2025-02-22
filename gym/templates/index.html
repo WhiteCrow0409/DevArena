@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise - FitFrame</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{{ url_for('home') }}">FitFrame</a>
+            </div>
+            <div class="nav-links">
+                {% if profile_pic %}
+                    <div class="user-profile">
+                        <img src="{{ profile_pic }}" alt="Profile" class="profile-pic">
+                        <span class="username">{{ session.username }}</span>
+                    </div>
+                {% endif %}
+                <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link">FAQs</a>
+                <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="exercise-container">
+        <div class="exercise-controls">
+            <select id="exercise-select" class="exercise-select">
+                <option value="">Select Exercise</option>
+                <option value="bicep_curl">Bicep Curls</option>
+                <option value="squat">Squats</option>
+            </select>
+            <div class="timer-input">
+                <label for="exercise-duration">Exercise Duration (seconds):</label>
+                <input type="number" id="exercise-duration" min="30" max="300" value="60" step="30">
+            </div>
+            <button id="start-exercise" class="primary-button">Start Exercise</button>
+            <button id="reset-counter" class="secondary-button">Reset Counter</button>
+        </div>
+
+        <div class="video-container">
+            <video id="video" width="640" height="480" autoplay></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+            <div class="exercise-overlay">
+                <div class="overlay-top">
+                    <div id="timer" class="timer">Time: 00:00</div>
+                    <div id="rep-counter" class="rep-counter">Reps: 0</div>
+                </div>
+                <div class="overlay-middle">
+                    <div id="exercise-stage" class="exercise-stage">Stage: Ready</div>
+                </div>
+                <div class="overlay-bottom">
+                    <div id="accuracy" class="accuracy">Accuracy: 0%</div>
+                    <div id="form-feedback" class="form-feedback">Get ready to start!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-instructions">
+            <h3>Instructions:</h3>
+            <div id="bicep-instructions" class="instruction-set" style="display: none;">
+                <h4>Bicep Curl Instructions:</h4>
+                <ul>
+                    <li>Stand straight with weights at your sides</li>
+                    <li>Keep your elbows close to your body</li>
+                    <li>Curl the weights up smoothly</li>
+                    <li>Lower with control</li>
+                </ul>
+            </div>
+            <div id="squat-instructions" class="instruction-set" style="display: none;">
+                <h4>Squat Instructions:</h4>
+                <ul>
+                    <li>Stand with feet shoulder-width apart</li>
+                    <li>Keep your back straight</li>
+                    <li>Lower until thighs are parallel to ground</li>
+                    <li>Push through your heels to stand</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FitFrame. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

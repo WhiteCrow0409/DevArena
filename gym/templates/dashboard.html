@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FitFrame</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{{ url_for('home') }}">FitFrame</a>
+            </div>
+            <div class="nav-links">
+                <a href="{{ url_for('exercise') }}" class="nav-link">Exercise</a>
+                <a href="#" class="nav-link">FAQs</a>
+                <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Welcome, {{ session.username }}!</h1>
+            <div class="points-overview">
+                <div class="points-card">
+                    <h3>Daily Points</h3>
+                    <p class="points">{{ daily_points }}/10</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: {{ (daily_points/10) * 100 }}%"></div>
+                    </div>
+                </div>
+                <div class="points-card">
+                    <h3>Total Points</h3>
+                    <p class="points">{{ total_points }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <section class="exercise-history">
+                <h2>Exercise History</h2>
+                <div class="history-chart">
+                    <canvas id="exerciseChart"></canvas>
+                </div>
+                <div class="history-list">
+                    {% for exercise in exercise_history|reverse %}
+                    <div class="history-item">
+                        <div class="exercise-info">
+                            <h4>{{ exercise.pose }}</h4>
+                            <p>Accuracy: {{ "%.2f"|format(exercise.accuracy) }}%</p>
+                        </div>
+                        <div class="exercise-meta">
+                            <span class="points-earned">+{{ exercise.points_earned }} pts</span>
+                            <span class="timestamp">{{ exercise.timestamp.strftime('%Y-%m-%d %H:%M') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="rewards-section">
+                <h2>Available Rewards</h2>
+                <div class="rewards-grid">
+                    {% for reward in rewards %}
+                    <div class="reward-card {% if total_points >= reward.points %}available{% endif %}">
+                        <h3>{{ reward.name }}</h3>
+                        <p class="points-required">{{ reward.points }} points</p>
+                        <button class="redeem-button" 
+                                {% if total_points < reward.points %}disabled{% endif %}>
+                            {% if total_points >= reward.points %}
+                                Redeem Now
+                            {% else %}
+                                {{ reward.points - total_points }} more points needed
+                            {% endif %}
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Initialize exercise history chart
+        const ctx = document.getElementById('exerciseChart').getContext('2d');
+        const exerciseData = {
+            labels: {{ exercise_history|map(attribute='timestamp')|map('strftime', '%Y-%m-%d')|list|tojson }},
+            datasets: [{
+                label: 'Exercise Points',
+                data: {{ exercise_history|map(attribute='points_earned')|list|tojson }},
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        new Chart(ctx, {
+            type: 'line',
+            data: exerciseData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>
