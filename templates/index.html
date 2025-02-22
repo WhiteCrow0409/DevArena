@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yoga Pose Evaluator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-12">
+                <h1 class="text-center mb-4">Yoga Pose Evaluator</h1>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Select Yoga Pose</h5>
+                        <select id="poseSelect" class="form-select mb-3">
+                            <option value="">Choose a pose...</option>
+                            {% for pose in class_labels %}
+                            <option value="{{ pose }}">{{ pose }}</option>
+                            {% endfor %}
+                        </select>
+                        <button id="startButton" class="btn btn-primary" disabled>Start Evaluation</button>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div id="camera-container" class="text-center">
+                            <video id="video" width="640" height="480" autoplay class="img-fluid"></video>
+                            <canvas id="canvas" width="640" height="480" class="d-none"></canvas>
+                        </div>
+                        <div id="timer" class="text-center mt-3 h4 d-none">
+                            Time Remaining: <span id="countdown">15</span>s
+                        </div>
+                        <div id="accuracy" class="text-center mt-3">
+                            <div class="progress">
+                                <div id="accuracyBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <div id="accuracyText" class="mt-2">Accuracy: 0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="results" class="card mb-4 d-none">
+                    <div class="card-body">
+                        <h5 class="card-title">Final Results</h5>
+                        <div id="finalScore" class="text-center h3"></div>
+                        <div id="feedback" class="text-center mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

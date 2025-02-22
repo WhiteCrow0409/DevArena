@@ -1,0 +1,95 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#camera-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#video, #canvas {
+    width: 100%;
+    max-width: 640px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.progress {
+    height: 25px;
+    background-color: #f0f0f0;
+    margin: 15px 0;
+}
+
+.progress-bar {
+    transition: width 0.5s ease-in-out;
+    background-color: #28a745;
+}
+
+#timer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+#startButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+}
+
+#startButton:disabled {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+#poseSelect {
+    font-size: 1.1rem;
+}
+
+#accuracyText {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #28a745;
+}
+
+#finalScore {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #28a745;
+    margin: 20px 0;
+}
+
+#feedback {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 8px;
+}
